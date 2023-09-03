@@ -1,15 +1,34 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "popo-web",
+  "miniprogramRoot": "dist/",
   "description": "",
-  "appid": "touristappid",
   "setting": {
     "urlCheck": true,
     "es6": false,
     "enhance": false,
     "compileHotReLoad": false,
     "postcss": false,
-    "minified": false
+    "minified": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "coverView": false,
+    "showShadowRootInWxmlPanel": false,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true
   },
-  "compileType": "miniprogram"
+  "compileType": "miniprogram",
+  "srcMiniprogramRoot": "dist/",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "libVersion": "3.0.1",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wx345e1649c10cf8ef"
 }
