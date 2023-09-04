@@ -82,9 +82,9 @@ export default class Index extends Component {
           current={this.state.currentTab}
           onClick={this.handleTabClick}
           tabList={[
-            { title: '小组', iconType: 'list'},
             { title: '地图', iconType: 'map-pin'},
-            { title: '金库', iconType: 'money'}
+            { title: '创建小组', iconType: 'add'},
+            { title: '捐赠', iconType: 'money'}
           ]}
         />
       </View>
