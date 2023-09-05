@@ -16,6 +16,7 @@ export default defineAppConfig({
   },
   requiredPrivateInfos: [ 
     "getLocation",
+    "chooseLocation",
     "onLocationChange",
     "startLocationUpdateBackground",
     "chooseAddress"
