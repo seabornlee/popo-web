@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { Component } from 'react'
 import { View, Text, Map } from '@tarojs/components'
-import { AtForm, AtInput, AtButton, AtImagePicker } from 'taro-ui'
+import { AtForm, AtInput, AtButton, AtImagePicker, AtTag } from 'taro-ui'
 import 'taro-ui/dist/style/components/form.scss'
 import 'taro-ui/dist/style/components/input.scss'
 import 'taro-ui/dist/style/components/button.scss'
@@ -14,9 +14,11 @@ export default class CreateGroup extends Component {
     latitude: null,
     longitude: null,
     name: '',
-    tags: '',
+    currentTagInput: '',
+    tags: [],
     images: [],
-    location: null
+    location: null,
+    inputValueKey: 0
   }
 
   handleChangeName = (value) => {
@@ -25,15 +27,25 @@ export default class CreateGroup extends Component {
     })
   }
 
-  handleChangeTags = (value) => {
-    this.setState({
-      tags: value
-    })
+  handleConfirm = (value, event) => {
+    if (value) { // Only add the tag if there's any
+      this.setState(prevState => ({
+        tags: [...prevState.tags, value],
+        currentTagInput: '',
+        inputValueKey: Math.random()
+      }));
+    }
   }
 
   handleChangeImage = (files) => {
     this.setState({
       images: files
+    })
+  }
+
+  handleChangeTag = (value, event) => {
+    this.setState({
+      currentTagInput: value
     })
   }
 
@@ -60,6 +72,12 @@ export default class CreateGroup extends Component {
     });
   }
 
+  handleDeleteTag = (tagToDelete) => {
+    this.setState((prevState) => ({
+      tags: prevState.tags.filter((tag, index) => index !== tagToDelete),
+    }));
+  };
+
   handleSubmit = () => {
     if(!this.state.name || !this.state.tags || this.state.images.length === 0) {
       Taro.atMessage({ 'message': 'All fields are required!', 'type': 'error', })
@@ -74,22 +92,48 @@ export default class CreateGroup extends Component {
         <AtForm
           onSubmit={this.handleSubmit}
         >
-          <AtInput
-            name='groupName'
-            title='社区名称'
-            type='text'
-            placeholder='Enter group name'
-            value={this.state.name}
-            onChange={this.handleChangeName}
-          />
-          <AtInput
-            name='tags'
-            title='成员标签'
-            type='text'
-            placeholder='Enter tags'
-            value={this.state.tags}
-            onChange={this.handleChangeTags}
-          />
+          <View className='row'>
+            <Text>名称</Text>
+            <AtInput
+              name='groupName'
+              type='text'
+              placeholder='Enter group name'
+              value={this.state.name}
+              onChange={this.handleChangeName}
+            />
+          </View>
+          <View>
+            <Text>成员标签</Text>
+            <AtInput
+              key={this.state.inputValueKey}
+              name='tags'
+              type='text'
+              focus
+              placeholder='Enter tag'
+              value={this.state.currentTagInput}
+              onConfirm={this.handleConfirm}
+              onChange={this.handleChangeTag}
+            />
+            <View className='tags'>
+              {this.state.tags.map((tag, index) => (
+                <View className='tag-container'>
+                  <AtTag key={index} type='primary' circle>{tag}</AtTag>
+                  <Text 
+                    className="at-icon at-icon-close-circle" 
+                    onClick={() => this.handleDeleteTag(index)}
+                    style={
+                      {
+                        position: 'relative',
+                        left: '-18px',
+                        top: '-10px',
+                        color: '#ff0000'
+                      }
+                    }
+                  />
+                </View>
+              ))}
+            </View>
+          </View>
           <View>
             <Text>场地照片</Text>
             <AtImagePicker
@@ -99,7 +143,7 @@ export default class CreateGroup extends Component {
             />
           </View>
           <View>
-            <Text>Location</Text>
+            <Text>位置</Text>
             <Map
               longitude={this.state.longitude}
               latitude={this.state.latitude}

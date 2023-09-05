@@ -1,11 +1,18 @@
 @import "~taro-ui/dist/style/components/form.scss";
 @import "~taro-ui/dist/style/components/input.scss";
 @import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/tag.scss";
+@import "~taro-ui/dist/style/components/flex.scss";
 
 .page {
   display: flex;
   flex-direction: column;
   height: 100vh; // setting the height to fill the viewport
+}
+
+text {
+  font-size: 34px;
+  margin-left: 30px;
 }
 
 .submit-button {
@@ -16,3 +23,18 @@
 map {
   width: 100vw;
 }
+
+.tags {
+  display: flex;
+  align-items: flex-start; /* Vertical alignment (optional) */
+  justify-content: flex-start; /* Horizontal alignment */
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tag-container {
+  display: inline-flex;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
