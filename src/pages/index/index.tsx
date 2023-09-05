@@ -54,6 +54,12 @@ export default class Index extends Component {
     this.setState({
       currentTab: value
     });
+
+    if (value === 1) {
+      Taro.navigateTo({
+        url: '/pages/newGroup/index'
+      })
+    }
   }
 
   render () {
