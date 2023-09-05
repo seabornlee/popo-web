@@ -7,6 +7,7 @@ import 'taro-ui/dist/style/components/input.scss'
 import 'taro-ui/dist/style/components/button.scss'
 import 'taro-ui/dist/style/components/image-picker.scss'
 import 'taro-ui/dist/style/components/icon.scss'
+import './index.scss'
 
 export default class CreateGroup extends Component {
   state = {
@@ -69,7 +70,7 @@ export default class CreateGroup extends Component {
 
   render() {
     return (
-      <View>
+      <View className='page'>
         <AtForm
           onSubmit={this.handleSubmit}
         >
@@ -105,8 +106,8 @@ export default class CreateGroup extends Component {
               onClick={this.handleChooseLocation}>
             </Map>
           </View>
-          <AtButton formType='submit'>Submit</AtButton>
         </AtForm>
+        <AtButton type='primary' className="submit-button" formType='submit'>创建</AtButton>
       </View>
     )
   }
