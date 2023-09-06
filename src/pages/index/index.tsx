@@ -107,8 +107,6 @@ export default class Index extends Component {
               longitude={marker.longitude}
               latitude={marker.latitude}
             >
-              <CoverImage src={marker.iconPath} />
-              <CoverView>{marker.name}</CoverView>
             </CoverView>
           ))}
         </Map>
