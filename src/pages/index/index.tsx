@@ -78,18 +78,39 @@ export default class Index extends Component {
       success: function (res) {
         if (res.code) {
           Taro.request({
-            url: "http://localhost:1337/wechatLogin",
+            url: "http://localhost:1337/account/login-with-wechat",
             data: {
               code: res.code,
             },
+          }).then(res => {
+            if (res.data.token || !this.verifyJWTFormat(res.data.token)) {
+              Taro.setStorage({
+                key: 'token',
+                data: res.data.token
+              });
+
+              Taro.navigateTo({ url: "/pages/newGroup/index" });
+            } else {
+              console.log("登录失败！");
+              console.log(res.data);
+            }
           });
-          console.log(res);
         } else {
           console.log("登录失败！" + res.errMsg);
         }
       },
     });
   };
+
+  verifyJWTFormat = (jwt) => {
+    // Regular expression pattern to match JWT format
+    var jwtPattern = /^[\w-]+\.[\w-]+\.[\w-]+$/;
+
+    // Check if the JWT matches the pattern
+    var isValidFormat = jwtPattern.test(jwt);
+
+    return isValidFormat;
+  }
 
   render() {
     return (

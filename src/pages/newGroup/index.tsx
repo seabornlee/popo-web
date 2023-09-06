@@ -100,10 +100,10 @@ export default class CreateGroup extends Component {
           tags: JSON.stringify(tags),
           images: JSON.stringify(images),
           location: JSON.stringify(location),
-          me: 'seaborn'
         },
         header: {
           "content-type": "application/json",
+          "token": await Taro.getStorageSync("token"),
         },
       });
 
