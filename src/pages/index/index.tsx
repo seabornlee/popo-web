@@ -161,6 +161,36 @@ export default class Index extends Component {
     })
   }
 
+  getDistance = () => {
+    let lat1 = this.state.latitude;
+    let lon1 = this.state.longitude;
+
+    let lat2 = this.state.selectedGroup.location.latitude;
+    let lon2 = this.state.selectedGroup.location.longitude;
+
+    var earthRadiusKm = 6371;
+
+    var dLat = this.degreesToRadians(lat2 - lat1);
+    var dLon = this.degreesToRadians(lon2 - lon1);
+
+    lat1 = this.degreesToRadians(lat1);
+    lat2 = this.degreesToRadians(lat2);
+
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2); 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+    var distance = earthRadiusKm * c * 1000;
+    if (distance > 1000) {
+        return (distance / 1000).toFixed(2) + '公里';
+    } else {
+        return Math.ceil(distance) + '米';
+    }
+  }
+
+  degreesToRadians = (degrees) => {
+      return degrees * Math.PI / 180;
+  }
+
   render() {
     return (
       <View className='index'>
@@ -192,7 +222,7 @@ export default class Index extends Component {
                 <View className='member-count'>38</View> 位成员，
                 <View className='member-count'>12</View> 场活动
                 <View>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
-                <View>🧭 &nbsp;距您直线2.3公里</View>
+                <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
                 <View className='actions'><AtButton type='primary' size='small'>加入</AtButton></View>
               </View>
             </View>
