@@ -224,6 +224,7 @@ export default class Index extends Component {
                 <View>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
                 <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
                 <View className='actions'><AtButton type='primary' size='small'>加入</AtButton></View>
+                <View className='coin'>🪙 12000 Popo</View>
               </View>
             </View>
           </View>
