@@ -213,7 +213,7 @@ export default class Index extends Component {
                 <View className='tags'>
                   {this.state.selectedGroup.tags.map((tag, index) => (
                     <View className='tag-container'>
-                      <AtTag key={index} type='primary' circle>
+                      <AtTag key={index} type='primary' size='small' circle>
                         {tag}
                       </AtTag>
                     </View>
