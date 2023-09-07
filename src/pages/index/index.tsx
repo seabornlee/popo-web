@@ -206,7 +206,7 @@ export default class Index extends Component {
           <View className='group-container'>
             <View className='at-row'>
               <View className='at-col'>
-                <Image src='https://cdn.pixabay.com/photo/2023/08/26/17/49/dahlias-8215514_1280.jpg' />
+                <Image src={this.state.selectedGroup.images[0]} />
               </View>
               <View className='at-col'>
                 <View className='group-name'>{this.state.selectedGroup.name}</View>

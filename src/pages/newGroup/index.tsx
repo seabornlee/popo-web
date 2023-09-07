@@ -16,6 +16,7 @@ export default class CreateGroup extends Component {
     name: "",
     currentTagInput: "",
     tags: [],
+    localImages: [],
     images: [],
     location: null,
     inputValueKey: 0,
@@ -38,12 +39,27 @@ export default class CreateGroup extends Component {
     }
   };
 
-  handleChangeImage = (files) => {
-    this.setState({
-      images: files,
-    });
-  };
-
+  handleChangeImage = async (files, action) => {
+    const images = this.state.images;
+    const thiz = this;
+    if(action === 'add'){
+      Taro.uploadFile({
+        url: 'http://localhost:1337/image-uploader', // 这是你的Sails.js服务器地址
+        filePath: files[0].url,
+        name: 'file',
+        header: {
+          token: await Taro.getStorageSync('token')
+        },
+        success: function (res) {
+          console.log(res)
+          thiz.setState({
+            localImages: files,
+            images: [...images, JSON.parse(res.data).url]
+          });
+        }
+      });
+    }
+  }
   handleChangeTag = (value, event) => {
     this.setState({
       currentTagInput: value,
@@ -180,9 +196,8 @@ export default class CreateGroup extends Component {
           <View>
             <Text>场地照片</Text>
             <AtImagePicker
-              files={this.state.images}
+              files={this.state.localImages}
               onChange={this.handleChangeImage}
-              multiple
             />
           </View>
           <View>
