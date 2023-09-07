@@ -8,6 +8,7 @@ import {
   AtFloatLayout,
   AtCard,
   AtTag,
+  AtButton
 } from "taro-ui";
 import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
@@ -192,6 +193,7 @@ export default class Index extends Component {
                 <View className='member-count'>12</View> 场活动
                 <View>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
                 <View>🧭 &nbsp;距您直线2.3公里</View>
+                <View className='actions'><AtButton type='primary' size='small'>加入</AtButton></View>
               </View>
             </View>
           </View>

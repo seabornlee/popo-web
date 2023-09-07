@@ -2,6 +2,8 @@
 @import "~taro-ui/dist/style/components/card.scss";
 @import "~taro-ui/dist/style/components/float-layout.scss";
 @import "~taro-ui/dist/style/components/flex.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
 
 .index {
   width: 100vw;
@@ -28,6 +30,10 @@ map {
     width: 320px;
     height: 390px;
     border-radius: 10px;
+  }
+
+  .actions {
+    margin-top: 10px; 
   }
 }
 
