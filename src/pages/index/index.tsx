@@ -8,7 +8,7 @@ import {
   AtFloatLayout,
   AtCard,
   AtTag,
-  AtButton
+  AtButton,
 } from "taro-ui";
 import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
@@ -157,9 +157,9 @@ export default class Index extends Component {
   handleMapClick = (e) => {
     console.log("map click", e);
     this.setState({
-      selectedGroup: null
-    })
-  }
+      selectedGroup: null,
+    });
+  };
 
   getDistance = () => {
     let lat1 = this.state.latitude;
@@ -176,55 +176,84 @@ export default class Index extends Component {
     lat1 = this.degreesToRadians(lat1);
     lat2 = this.degreesToRadians(lat2);
 
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2); 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var distance = earthRadiusKm * c * 1000;
     if (distance > 1000) {
-        return (distance / 1000).toFixed(2) + '公里';
+      return (distance / 1000).toFixed(2) + "公里";
     } else {
-        return Math.ceil(distance) + '米';
+      return Math.ceil(distance) + "米";
     }
-  }
+  };
 
   degreesToRadians = (degrees) => {
-      return degrees * Math.PI / 180;
-  }
+    return (degrees * Math.PI) / 180;
+  };
+
+  join = () => {
+    Taro.request({
+      url: "http://localhost:1337/group/join",
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        token: this.state.token,
+      },
+      data: {
+        groupId: this.state.selectedGroup.id,
+      },
+    }).then((res) => {
+      console.log(res);
+      if (res.data.success) {
+        Taro.atMessage({ message: "加入成功！", type: "success" });
+      } else {
+        Taro.atMessage({ message: "加入失败！", type: "error" });
+      }
+    });
+  };
 
   render() {
     return (
-      <View className='index'>
+      <View className="index">
         <Map
           longitude={this.state.longitude}
           latitude={this.state.latitude}
           markers={this.state.markers}
           onmarkertap={this.handleMarkerTap}
           showLocation
-        >
-        </Map>
+        ></Map>
         {this.state.selectedGroup && (
-          <View className='group-container'>
-            <View className='at-row'>
-              <View className='at-col'>
+          <View className="group-container">
+            <View className="at-row">
+              <View className="at-col">
                 <Image src={this.state.selectedGroup.images[0]} />
               </View>
-              <View className='at-col'>
-                <View className='group-name'>{this.state.selectedGroup.name}</View>
-                <View className='tags'>
+              <View className="at-col">
+                <View className="group-name">
+                  {this.state.selectedGroup.name}
+                </View>
+                <View className="tags">
                   {this.state.selectedGroup.tags.map((tag, index) => (
-                    <View className='tag-container'>
-                      <AtTag key={index} type='primary' size='small' circle>
+                    <View className="tag-container">
+                      <AtTag key={index} type="primary" size="small" circle>
                         {tag}
                       </AtTag>
                     </View>
                   ))}
                 </View>
-                <View className='member-count'>38</View> 位成员，
-                <View className='member-count'>12</View> 场活动
-                <View className='address'>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
+                <View className="count">38</View> 位成员，
+                <View className="count">12</View> 场活动
+                <View className="address">
+                  📍 &nbsp;{this.state.selectedGroup.location.name}
+                </View>
                 <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
-                <View className='actions'><AtButton type='primary' size='small'>加入</AtButton></View>
-                <View className='coin'>🪙 12000 Popo</View>
+                <View className="actions">
+                  <AtButton type="primary" size="small" onClick={this.join}>
+                    加入
+                  </AtButton>
+                </View>
+                <View className="coin">🪙 12000 Popo</View>
               </View>
             </View>
           </View>
@@ -239,7 +268,7 @@ export default class Index extends Component {
             { title: "捐赠", iconType: "money" },
           ]}
         />
-        <AtActionSheet isOpened={this.state.showLogin} cancelText='取消'>
+        <AtActionSheet isOpened={this.state.showLogin} cancelText="取消">
           <AtActionSheetItem onClick={this.login}>微信登录</AtActionSheetItem>
         </AtActionSheet>
       </View>

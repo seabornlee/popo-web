@@ -33,29 +33,29 @@ map {
   }
 
   .actions {
-    margin-top: 10px; 
+    margin-top: 10px;
   }
 
   .coin {
     text-align: right;
-    color: red;
+    color: #e06f19;
   }
 
   .address {
-    white-space:normal;
+    white-space: normal;
     word-wrap: break-word;
     display: -webkit-box;
   }
-}
 
-.group-name {
-  font-size: 38px;
-  font-weight: bold;
-}
+  .group-name {
+    font-size: 38px;
+    font-weight: bold;
+  }
 
-.member-count {
-  display: inline;
-  color: #27824a;
-  font-size: 44px;
-  font-weight: bold;
+  .count {
+    display: inline;
+    color: #26c1dd;
+    font-size: 44px;
+    font-weight: bold;
+  }
 }
