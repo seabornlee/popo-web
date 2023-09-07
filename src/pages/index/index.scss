@@ -21,7 +21,7 @@ map {
   width: 95%;
   position: absolute;
   bottom: 140px;
-  height: 400px;
+  height: auto;
   background-color: #fff;
   padding: 10px;
   font-size: 32px;
@@ -39,6 +39,12 @@ map {
   .coin {
     text-align: right;
     color: red;
+  }
+
+  .address {
+    white-space:normal;
+    word-wrap: break-word;
+    display: -webkit-box;
   }
 }
 

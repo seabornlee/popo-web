@@ -221,7 +221,7 @@ export default class Index extends Component {
                 </View>
                 <View className='member-count'>38</View> 位成员，
                 <View className='member-count'>12</View> 场活动
-                <View>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
+                <View className='address'>📍 &nbsp;{this.state.selectedGroup.location.name}</View>
                 <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
                 <View className='actions'><AtButton type='primary' size='small'>加入</AtButton></View>
                 <View className='coin'>🪙 12000 Popo</View>
