@@ -1,4 +1,7 @@
 @import "~taro-ui/dist/style/components/action-sheet.scss";
+@import "~taro-ui/dist/style/components/card.scss";
+@import "~taro-ui/dist/style/components/float-layout.scss";
+@import "~taro-ui/dist/style/components/flex.scss";
 
 .index {
   width: 100vw;
@@ -8,4 +11,34 @@
 map {
   width: 100vw;
   height: 100vh;
+}
+
+.group-container {
+  border-radius: 20px;
+  margin: 0 10px;
+  width: 95%;
+  position: absolute;
+  bottom: 140px;
+  height: 400px;
+  background-color: #fff;
+  padding: 10px;
+  font-size: 24px;
+
+  image {
+    width: 320px;
+    height: 390px;
+    border-radius: 10px;
+  }
+}
+
+.group-name {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.member-count {
+  display: inline;
+  color: #27824a;
+  font-size: 44px;
+  font-weight: bold;
 }

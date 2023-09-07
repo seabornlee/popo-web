@@ -1,3 +1,17 @@
 @import "~taro-ui/dist/style/index.scss";
 @import "~taro-ui/dist/style/components/tab-bar.scss";
 @import "~taro-ui/dist/style/components/badge.scss";
+
+.tags {
+  display: flex;
+  align-items: flex-start; /* Vertical alignment (optional) */
+  justify-content: flex-start; /* Horizontal alignment */
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tag-container {
+  display: inline-flex;
+  margin-top: 5px;
+  margin-right: 5px;
+}
