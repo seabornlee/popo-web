@@ -83,7 +83,8 @@ export default class CreateGroup extends Component {
     if (
       !this.state.name ||
       !this.state.tags ||
-      this.state.images.length === 0
+      this.state.images.length === 0 ||
+      this.state.location === null
     ) {
       Taro.atMessage({ message: "必填字段不能为空！", type: "error" });
       return;
@@ -111,15 +112,17 @@ export default class CreateGroup extends Component {
         throw new Error(`HTTP Error: ${response.statusCode}`);
       }
 
-      console.log(response.data);
-
       // handle incoming data, whether it's error or success
       if (response.data.error) {
         Taro.atMessage({ message: response.data.error, type: "error" });
       } else {
         Taro.atMessage({
-          message: "Group successfully created!",
+          message: "创建成功！",
           type: "success",
+        });
+
+        Taro.navigateTo({
+          url: '/pages/index/index'
         });
       }
     } catch (e) {
@@ -129,15 +132,15 @@ export default class CreateGroup extends Component {
 
   render() {
     return (
-      <View className="page">
+      <View className='page'>
         <AtMessage />
         <AtForm onSubmit={this.handleSubmit}>
-          <View className="row">
+          <View className='row'>
             <Text>名称</Text>
             <AtInput
-              name="groupName"
-              type="text"
-              placeholder="Enter group name"
+              name='groupName'
+              type='text'
+              placeholder='Enter group name'
               value={this.state.name}
               onChange={this.handleChangeName}
             />
@@ -146,22 +149,22 @@ export default class CreateGroup extends Component {
             <Text>成员标签</Text>
             <AtInput
               key={this.state.inputValueKey}
-              name="tags"
-              type="text"
+              name='tags'
+              type='text'
               focus
-              placeholder="Enter tag"
+              placeholder='Enter tag'
               value={this.state.currentTagInput}
               onConfirm={this.handleConfirm}
               onChange={this.handleChangeTag}
             />
-            <View className="tags">
+            <View className='tags'>
               {this.state.tags.map((tag, index) => (
-                <View className="tag-container">
-                  <AtTag key={index} type="primary" circle>
+                <View className='tag-container'>
+                  <AtTag key={index} type='primary' circle>
                     {tag}
                   </AtTag>
                   <Text
-                    className="at-icon at-icon-close-circle"
+                    className='at-icon at-icon-close-circle'
                     onClick={() => this.handleDeleteTag(index)}
                     style={{
                       position: "relative",
@@ -192,9 +195,9 @@ export default class CreateGroup extends Component {
           </View>
         </AtForm>
         <AtButton
-          type="primary"
-          className="submit-button"
-          formType="submit"
+          type='primary'
+          className='submit-button'
+          formType='submit'
           onClick={this.handleSubmit}
         >
           创建

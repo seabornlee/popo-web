@@ -1,19 +1,13 @@
 import Taro from "@tarojs/taro";
 import { Component } from "react";
 import { View, Map, CoverView, CoverImage } from "@tarojs/components";
-import { AtTabBar } from "taro-ui";
-import { AtActionSheet, AtActionSheetItem } from "taro-ui";
+import { AtTabBar, AtActionSheet, AtActionSheetItem } from "taro-ui";
 import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
 import "./index.scss";
 
 export default class Index extends Component {
-  config = {
-    navigationBarTitleText: "Home",
-  };
-
   state = {
-    user: null,
     latitude: null,
     longitude: null,
     speed: null,
@@ -21,9 +15,47 @@ export default class Index extends Component {
     currentTab: 0,
     markers: [],
     showLogin: false,
+    token: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({
+      token: await Taro.getStorageSync("token")
+    });
+
+    const response = await Taro.request({
+      url: "http://localhost:1337/group",
+      method: "GET",
+      header: {
+        "content-type": "application/json"
+      },
+    });
+    const groups = response.data;
+    const markers = groups
+      .map((group) => ({
+        id: group.id,
+        name: group.name,
+        tags: JSON.parse(group.tags),
+        images: JSON.parse(group.images),
+        location: JSON.parse(group.location),
+      }))
+      .map((group) => ({
+        id: group.id,
+        latitude: group.location.latitude,
+        longitude: group.location.longitude,
+        callout: {
+          content: group.name,
+          color: "#000000",
+          fontSize: 14,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: "#000000",
+          padding: 5,
+          display: "ALWAYS",
+          textAlign: "center",
+        },
+      }));
+    console.log(markers);
     Taro.getLocation({
       type: "wgs84",
       success: (res) => {
@@ -32,24 +64,7 @@ export default class Index extends Component {
           longitude: res.longitude,
           speed: res.speed,
           accuracy: res.accuracy,
-          markers: [
-            {
-              id: 1,
-              latitude: res.latitude,
-              longitude: res.longitude,
-              callout: {
-                content: "面包树朴门永续",
-                color: "#000000",
-                fontSize: 14,
-                borderWidth: 1,
-                borderRadius: 10,
-                borderColor: "#000000",
-                padding: 5,
-                display: "ALWAYS",
-                textAlign: "center",
-              },
-            },
-          ],
+          markers: markers,
         });
       },
     });
@@ -60,16 +75,16 @@ export default class Index extends Component {
       currentTab: value,
     });
 
-    console.log(value);
     if (value === 1) {
+      this.login();
       // create group
-      if (this.state.user === null) {
-        this.setState({
-          showLogin: true,
-        });
-      } else {
-        Taro.navigateTo({ url: "/pages/newGroup/index" });
-      }
+      // if (this.state.token) {
+      //   Taro.navigateTo({ url: "/pages/newGroup/index" });
+      // } else {
+        // this.setState({
+        //   showLogin: true,
+        // });
+      // }
     }
   };
 
@@ -82,11 +97,11 @@ export default class Index extends Component {
             data: {
               code: res.code,
             },
-          }).then(res => {
+          }).then((res) => {
             if (res.data.token || !this.verifyJWTFormat(res.data.token)) {
               Taro.setStorage({
-                key: 'token',
-                data: res.data.token
+                key: "token",
+                data: res.data.token,
               });
 
               Taro.navigateTo({ url: "/pages/newGroup/index" });
@@ -110,11 +125,11 @@ export default class Index extends Component {
     var isValidFormat = jwtPattern.test(jwt);
 
     return isValidFormat;
-  }
+  };
 
   render() {
     return (
-      <View className="index">
+      <View className='index'>
         <Map
           longitude={this.state.longitude}
           latitude={this.state.latitude}
@@ -122,13 +137,12 @@ export default class Index extends Component {
         >
           {this.state.markers.map((marker) => (
             <CoverView
-              className="marker"
+              className='marker'
               style={{ width: "30px", height: "30px", lineHeight: "30px" }}
               key={marker.id}
               longitude={marker.longitude}
               latitude={marker.latitude}
-            >
-            </CoverView>
+            ></CoverView>
           ))}
         </Map>
         <AtTabBar
@@ -141,7 +155,7 @@ export default class Index extends Component {
             { title: "捐赠", iconType: "money" },
           ]}
         />
-        <AtActionSheet isOpened={this.state.showLogin} cancelText="取消">
+        <AtActionSheet isOpened={this.state.showLogin} cancelText='取消'>
           <AtActionSheetItem onClick={this.login}>微信登录</AtActionSheetItem>
         </AtActionSheet>{" "}
       </View>
