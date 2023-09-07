@@ -57,6 +57,8 @@ export default class Index extends Component {
       id: group.id,
       latitude: group.location.latitude,
       longitude: group.location.longitude,
+      width: 30,
+      height: 40,
       callout: {
         content: group.name,
         color: "#000000",
@@ -104,6 +106,7 @@ export default class Index extends Component {
 
   handleMarkerTap = (e) => {
     console.log("marker tap", e);
+
     const groupId = e.markerId;
     const group = this.state.groups.find((g) => g.id === groupId);
     this.setState({
@@ -165,15 +168,8 @@ export default class Index extends Component {
           latitude={this.state.latitude}
           markers={this.state.markers}
           onmarkertap={this.handleMarkerTap}
+          showLocation
         >
-          {this.state.markers.map((marker) => (
-            <CoverView
-              className='marker'
-              key={marker.id}
-              longitude={marker.longitude}
-              latitude={marker.latitude}
-            ></CoverView>
-          ))}
         </Map>
         {this.state.selectedGroup && (
           <View className='group-container'>
