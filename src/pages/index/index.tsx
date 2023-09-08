@@ -1,14 +1,7 @@
 import Taro from "@tarojs/taro";
 import { Component } from "react";
-import { View, Map, CoverView, Image } from "@tarojs/components";
-import {
-  AtTabBar,
-  AtActionSheet,
-  AtActionSheetItem,
-  AtFloatLayout,
-  AtCard,
-  AtTag,
-} from "taro-ui";
+import { View, Map, Image } from "@tarojs/components";
+import { AtTabBar, AtTag } from "taro-ui";
 import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
 import "./index.scss";
@@ -21,17 +14,18 @@ export default class Index extends Component {
     accuracy: null,
     currentTab: 0,
     markers: [],
-    showLogin: false,
     token: null,
     groups: [],
     selectedGroup: null,
   };
 
-  async componentDidMount() {
+  async componentDidShow() {
     this.setState({
       token: await Taro.getStorageSync("token"),
     });
+  }
 
+  async componentDidMount() {
     const response = await Taro.request({
       url: "http://localhost:1337/group",
       method: "GET",
@@ -92,15 +86,11 @@ export default class Index extends Component {
     });
 
     if (value === 1) {
-      this.login();
-      // create group
-      // if (this.state.token) {
-      //   Taro.navigateTo({ url: "/pages/newGroup/index" });
-      // } else {
-      // this.setState({
-      //   showLogin: true,
-      // });
-      // }
+      if (this.state.token) {
+        Taro.navigateTo({ url: "/pages/newGroup/index" });
+      } else {
+        Taro.navigateTo({ url: "/pages/login/index" });
+      }
     }
   };
 
@@ -111,35 +101,6 @@ export default class Index extends Component {
     const group = this.state.groups.find((g) => g.id === groupId);
     this.setState({
       selectedGroup: group,
-    });
-  };
-
-  login = () => {
-    Taro.login({
-      success: function (res) {
-        if (res.code) {
-          Taro.request({
-            url: "http://localhost:1337/account/login-with-wechat",
-            data: {
-              code: res.code,
-            },
-          }).then((res) => {
-            if (res.data.token || !this.verifyJWTFormat(res.data.token)) {
-              Taro.setStorage({
-                key: "token",
-                data: res.data.token,
-              });
-
-              Taro.navigateTo({ url: "/pages/newGroup/index" });
-            } else {
-              console.log("登录失败！");
-              console.log(res.data);
-            }
-          });
-        } else {
-          console.log("登录失败！" + res.errMsg);
-        }
-      },
     });
   };
 
@@ -274,9 +235,6 @@ export default class Index extends Component {
             { title: "捐赠", iconType: "money" },
           ]}
         />
-        <AtActionSheet isOpened={this.state.showLogin} cancelText="取消">
-          <AtActionSheetItem onClick={this.login}>微信登录</AtActionSheetItem>
-        </AtActionSheet>
       </View>
     );
   }
