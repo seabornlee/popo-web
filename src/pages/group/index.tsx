@@ -42,19 +42,69 @@ export default class Group extends Component {
             ))}
           </Swiper>
         </View>
-        <Text className="members">小组成员</Text>
-        <View className="member at-row">
-          <View className="at-col-3">
-            <AtAvatar circle image="https://jdc.jd.com/img/200"></AtAvatar>
-          </View>
-          <View className="at-col-9">
-            <View className="name">李浪溪</View>
-            <View>
-              <AtTag key={0} type="primary" circle>
-                产品
-              </AtTag>
+        <View className="members">
+          <Text className="title">主理人</Text>
+          <View className="member at-row">
+            <View className="at-col-3 avatar-container">
+              <AtAvatar
+                className="avatar"
+                circle
+                image="https://jdc.jd.com/img/200"
+              ></AtAvatar>
             </View>
-            <View className="intro">向往的生活</View>
+            <View className="at-col-6">
+              <View className="name">李浪溪</View>
+              <View>
+                <AtTag key={0} type="primary" circle>
+                  产品
+                </AtTag>
+              </View>
+              <View className="intro">向往的生活</View>
+            </View>
+          </View>
+        </View>
+        <View className="members">
+          <Text className="title">成员(39)</Text>
+          <View className="member at-row">
+            <View className="at-col-3 avatar-container">
+              <AtAvatar
+                className="avatar"
+                circle
+                image="https://jdc.jd.com/img/200"
+              ></AtAvatar>
+            </View>
+            <View className="at-col-9">
+              <View className="name">李浪溪</View>
+              <View>
+                <AtTag key={0} type="primary" circle>
+                  产品
+                </AtTag>
+              </View>
+              <View className="intro">向往的生活</View>
+            </View>
+          </View>
+        </View>
+        <View className="members">
+          <Text className="title">活动(9)</Text>
+          <View className="member at-row">
+            <View className="at-col-3 avatar-container">
+              <AtAvatar
+                className="avatar"
+                image="https://jdc.jd.com/img/200"
+              ></AtAvatar>
+            </View>
+            <View className="at-col-9">
+              <View className="name">搞钱，搞事</View>
+              <View className="tag-container">
+                <AtTag key={0} type="primary" circle>
+                  2023.08.09
+                </AtTag>
+                <AtTag key={0} type="primary" circle>
+                  35人
+                </AtTag>
+              </View>
+              <View className="intro">地址：素方舟3楼未来办公空间</View>
+            </View>
           </View>
         </View>
         <View className="actions">

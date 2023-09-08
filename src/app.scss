@@ -19,5 +19,8 @@ page {
 .tag-container {
   display: inline-flex;
   margin-top: 5px;
-  margin-right: 5px;
+
+  .at-tag {
+    margin-right: 5px;
+  }
 }

@@ -1,19 +1,35 @@
 @import "~taro-ui/dist/style/components/avatar.scss";
 
-.members {
-  display: block;
-  margin: 10px 0;
-  font-size: 38px;
+page {
 }
 
-.member {
-  width: 95%;
-  border-radius: 10px;
-  background-color: #ffffff;
-  padding: 15px 10px 15px 10px;
+.members {
+  padding: 10px;
 
-  .name {
-    font-weight: bold;
+  .title {
+    display: block;
+    margin: 10px 0;
+    font-size: 38px;
+  }
+
+  .member {
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 10px 0;
+
+    .avatar-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .avatar {
+        width: 90%;
+      }
+    }
+
+    .name {
+      font-weight: bold;
+    }
   }
 }
 
