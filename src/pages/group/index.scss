@@ -1,0 +1,22 @@
+@import "~taro-ui/dist/style/components/avatar.scss";
+
+.members {
+  display: block;
+  margin: 10px 0;
+  font-size: 38px;
+}
+
+.member {
+  width: 95%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 15px 10px 15px 10px;
+
+  .name {
+    font-weight: bold;
+  }
+}
+
+.intro {
+  opacity: 0.6;
+}

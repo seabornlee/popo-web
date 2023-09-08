@@ -1,24 +1,21 @@
 export default defineAppConfig({
-  pages: [
-    'pages/index/index',
-    'pages/newGroup/index'
-  ],
+  pages: ["pages/index/index", "pages/newGroup/index", "pages/group/index"],
   window: {
-    backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    backgroundTextStyle: "light",
+    navigationBarBackgroundColor: "#fff",
+    navigationBarTitleText: "WeChat",
+    navigationBarTextStyle: "black",
   },
-  "permission": {
+  permission: {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
-    }
+      desc: "你的位置信息将用于小程序位置接口的效果展示", // 高速公路行驶持续后台定位
+    },
   },
-  requiredPrivateInfos: [ 
+  requiredPrivateInfos: [
     "getLocation",
     "chooseLocation",
     "onLocationChange",
     "startLocationUpdateBackground",
-    "chooseAddress"
-  ]
-})
+    "chooseAddress",
+  ],
+});

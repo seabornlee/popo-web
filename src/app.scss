@@ -2,6 +2,13 @@
 @import "~taro-ui/dist/style/components/tab-bar.scss";
 @import "~taro-ui/dist/style/components/badge.scss";
 
+page {
+  padding: 10px;
+  background-color: #eeeeee;
+  font-size: 32px;
+  opacity: 0.8;
+}
+
 .tags {
   display: flex;
   align-items: flex-start; /* Vertical alignment (optional) */

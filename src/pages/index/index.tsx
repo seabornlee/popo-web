@@ -213,6 +213,18 @@ export default class Index extends Component {
     });
   };
 
+  viewGroup = () => {
+    Taro.setStorage({
+      key: "group",
+      data: this.state.selectedGroup,
+    }).then((res) => {
+      console.log(res);
+      Taro.navigateTo({
+        url: "/pages/group/index",
+      });
+    });
+  };
+
   render() {
     return (
       <View className="index">
@@ -224,7 +236,7 @@ export default class Index extends Component {
           showLocation
         ></Map>
         {this.state.selectedGroup && (
-          <View className="group-container">
+          <View className="group-container" onClick={this.viewGroup}>
             <View className="at-row">
               <View className="at-col">
                 <Image src={this.state.selectedGroup.images[0]} />
