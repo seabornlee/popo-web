@@ -57,6 +57,11 @@ export default class Group extends Component {
             <View className="intro">向往的生活</View>
           </View>
         </View>
+        <View className="actions">
+          <AtButton type="primary" size="small" onClick={this.join}>
+            加入
+          </AtButton>
+        </View>
       </View>
     );
   }

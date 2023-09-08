@@ -8,6 +8,9 @@
 .index {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 map {
@@ -17,27 +20,20 @@ map {
 
 .group-container {
   border-radius: 20px;
-  margin: 0 10px;
   width: 95%;
   position: absolute;
   bottom: 140px;
   height: auto;
   background-color: #fff;
-  padding: 10px;
   font-size: 32px;
 
   image {
-    width: 320px;
-    height: 390px;
+    width: 290px;
+    height: 320px;
     border-radius: 10px;
   }
 
-  .actions {
-    margin-top: 10px;
-  }
-
   .coin {
-    text-align: right;
     color: #e06f19;
   }
 

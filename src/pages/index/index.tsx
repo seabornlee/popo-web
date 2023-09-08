@@ -8,7 +8,6 @@ import {
   AtFloatLayout,
   AtCard,
   AtTag,
-  AtButton,
 } from "taro-ui";
 import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
@@ -238,17 +237,17 @@ export default class Index extends Component {
         {this.state.selectedGroup && (
           <View className="group-container" onClick={this.viewGroup}>
             <View className="at-row">
-              <View className="at-col">
+              <View className="at-col-5">
                 <Image src={this.state.selectedGroup.images[0]} />
               </View>
-              <View className="at-col">
+              <View className="at-col-7">
                 <View className="group-name">
                   {this.state.selectedGroup.name}
                 </View>
                 <View className="tags">
                   {this.state.selectedGroup.tags.map((tag, index) => (
                     <View className="tag-container">
-                      <AtTag key={index} type="primary" size="small" circle>
+                      <AtTag key={index} type="primary" circle>
                         {tag}
                       </AtTag>
                     </View>
@@ -260,12 +259,7 @@ export default class Index extends Component {
                   📍 &nbsp;{this.state.selectedGroup.location.name}
                 </View>
                 <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
-                <View className="actions">
-                  <AtButton type="primary" size="small" onClick={this.join}>
-                    加入
-                  </AtButton>
-                </View>
-                <View className="coin">🪙 12000 Popo</View>
+                <View className="coin">🪙 &nbsp;12000 Popo</View>
               </View>
             </View>
           </View>
