@@ -7,13 +7,21 @@ import "./index.scss";
 export default class Group extends Component {
   state = {
     group: {
+      contact: "",
       name: "",
+      location: {
+        address: "",
+      },
+      owner: {
+        nickName: "",
+      },
       images: [],
     },
   };
 
   async componentDidMount() {
     const group = await Taro.getStorageSync("group");
+    console.log(group);
     this.setState({
       group: group,
     });
@@ -42,6 +50,13 @@ export default class Group extends Component {
             ))}
           </Swiper>
         </View>
+        <View>📍&nbsp;{this.state.group.location.address}</View>
+        <View className="coin">
+          ☎️ &nbsp;
+          {this.state.group.contact != ""
+            ? this.state.group.contact
+            : "暂无联系方式"}
+        </View>
         <View className="members">
           <Text className="title">主理人</Text>
           <View className="member at-row">
@@ -49,14 +64,19 @@ export default class Group extends Component {
               <AtAvatar
                 className="avatar"
                 circle
-                image="https://jdc.jd.com/img/200"
+                image={this.state.group.owner.avatarUrl}
               ></AtAvatar>
             </View>
             <View className="at-col-6">
-              <View className="name">李浪溪</View>
-              <View>
-                <AtTag key={0} type="primary" circle>
-                  产品
+              <View className="name">{this.state.group.owner.nickName}</View>
+              <View className="tag-container">
+                <AtTag type="primary" className="gender" circle>
+                  {this.state.group.owner.gender === 0 ? "男" : "女"}
+                </AtTag>
+                <AtTag type="primary" className="city" circle>
+                  {this.state.group.owner.city === ""
+                    ? "未知"
+                    : this.state.group.owner.city}
                 </AtTag>
               </View>
               <View className="intro">向往的生活</View>

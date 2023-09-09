@@ -40,6 +40,7 @@ export default class Index extends Component {
       images: JSON.parse(group.images),
       location: JSON.parse(group.location),
       contact: group.contact,
+      owner: group.owner,
     }));
 
     console.log(response.data);
