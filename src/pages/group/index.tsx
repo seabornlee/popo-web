@@ -83,7 +83,13 @@ export default class Group extends Component {
       },
     }).then((res) => {
       console.log(res);
-      this.updateGroup(res.data);
+      if (res.statusCode === 200) {
+        this.updateGroup(res.data);
+      } else if (res.statusCode === 401) {
+        Taro.navigateTo({
+          url: "/pages/profile/index",
+        });
+      }
     });
   };
 
