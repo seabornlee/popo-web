@@ -3,13 +3,17 @@
 page {
 }
 
+.info {
+  padding: 10px;
+}
+
 .members {
   padding: 10px;
 
   .title {
     display: block;
     margin: 10px 0;
-    font-size: 38px;
+    font-size: 32px;
   }
 
   .member {
@@ -23,6 +27,7 @@ page {
       align-items: center;
 
       .avatar {
+        height: 100%;
         width: 90%;
       }
     }

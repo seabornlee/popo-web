@@ -50,12 +50,14 @@ export default class Group extends Component {
             ))}
           </Swiper>
         </View>
-        <View>📍&nbsp;{this.state.group.location.address}</View>
-        <View className="coin">
-          ☎️ &nbsp;
-          {this.state.group.contact != ""
-            ? this.state.group.contact
-            : "暂无联系方式"}
+        <View className="info">
+          <View>📍&nbsp;{this.state.group.location.address}</View>
+          <View className="coin">
+            ☎️ &nbsp;
+            {this.state.group.contact != ""
+              ? this.state.group.contact
+              : "暂无联系方式"}
+          </View>
         </View>
         <View className="members">
           <Text className="title">主理人</Text>
@@ -90,7 +92,7 @@ export default class Group extends Component {
               <AtAvatar
                 className="avatar"
                 circle
-                image="https://jdc.jd.com/img/200"
+                image="https://preview.qiantucdn.com/ing/97/41/80/56358PICbZmtMntkkiPr7_PIC2018.png!w1024_new_small_1"
               ></AtAvatar>
             </View>
             <View className="at-col-9">
