@@ -14,6 +14,28 @@ export default class Profile extends Component {
     },
   };
 
+  async componentDidMount() {
+    Taro.request({
+      url: "http://localhost:1337/account/profile",
+      method: "GET",
+      header: {
+        "content-type": "application/json",
+        token: await Taro.getStorageSync("token"),
+      },
+    }).then((res) => {
+      console.log(res);
+      if (res.statusCode === 200) {
+        this.setState({
+          userInfo: res.data.userInfo,
+          hasUserInfo: true,
+          loggedIn: true,
+        });
+      } else {
+        console.log(res);
+      }
+    });
+  }
+
   login = () => {
     const thiz = this;
     Taro.login({

@@ -16,6 +16,7 @@ page {
   align-items: center;
   height: 100%; /* 或者给出一个具体的高度*/
   text-align: center;
+  text-align: -webkit-center;
 
   .nickName {
     font-size: 32px;
