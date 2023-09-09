@@ -10,7 +10,7 @@ export default class User extends Component {
   render() {
     const user = this.props.data;
     return (
-      <View className="member at-row">
+      <View className="user at-row">
         <View className="at-col-3 avatar-container">
           <AtAvatar className="avatar" circle image={user.avatarUrl}></AtAvatar>
         </View>
