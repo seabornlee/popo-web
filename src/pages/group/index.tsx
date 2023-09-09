@@ -25,6 +25,10 @@ export default class Group extends Component {
   };
 
   async componentDidMount() {
+    this.loadGroup();
+  }
+
+  loadGroup = async () => {
     const { id } = Taro.getCurrentInstance().router.params;
     console.log(id);
     Taro.request({
@@ -35,27 +39,31 @@ export default class Group extends Component {
       },
     }).then((res) => {
       console.log(res);
-      const group = {
-        id: res.data.id,
-        name: res.data.name,
-        tags: JSON.parse(res.data.tags),
-        images: JSON.parse(res.data.images),
-        location: JSON.parse(res.data.location),
-        contact: res.data.contact,
-        owner: res.data.owner,
-        memberCount: res.data.memberCount,
-        members: res.data.members,
-      };
-
-      this.setState({
-        group: group,
-      });
-
-      Taro.setNavigationBarTitle({
-        title: group.name,
-      });
+      this.updateGroup(res.data);
     });
-  }
+  };
+
+  updateGroup = (g) => {
+    const group = {
+      id: g.id,
+      name: g.name,
+      tags: JSON.parse(g.tags),
+      images: JSON.parse(g.images),
+      location: JSON.parse(g.location),
+      contact: g.contact,
+      owner: g.owner,
+      memberCount: g.memberCount,
+      members: g.members,
+    };
+
+    this.setState({
+      group: group,
+    });
+
+    Taro.setNavigationBarTitle({
+      title: group.name,
+    });
+  };
 
   openLocation = () => {
     Taro.openLocation({
@@ -75,11 +83,7 @@ export default class Group extends Component {
       },
     }).then((res) => {
       console.log(res);
-      if (res.statusCode === 200) {
-        console.log("加入成功！");
-      } else {
-        console.log("加入失败！");
-      }
+      this.updateGroup(res.data);
     });
   };
 
