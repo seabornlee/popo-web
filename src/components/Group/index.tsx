@@ -45,14 +45,8 @@ export default class Group extends Component {
   };
 
   viewGroup = (group) => {
-    Taro.setStorage({
-      key: "group",
-      data: group,
-    }).then((res) => {
-      console.log(res);
-      Taro.navigateTo({
-        url: "/pages/group/index",
-      });
+    Taro.navigateTo({
+      url: "/pages/group/index?id=" + group.id,
     });
   };
 

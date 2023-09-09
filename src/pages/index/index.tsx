@@ -29,7 +29,7 @@ export default class Index extends Component {
 
   async componentDidMount() {
     const response = await Taro.request({
-      url: "http://localhost:1337/group/list",
+      url: "http://localhost:1337/group",
       method: "GET",
       header: {
         "content-type": "application/json",

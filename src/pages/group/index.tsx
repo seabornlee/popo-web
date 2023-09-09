@@ -23,14 +23,38 @@ export default class Group extends Component {
   };
 
   async componentDidMount() {
-    const group = await Taro.getStorageSync("group");
-    console.log(group);
-    this.setState({
-      group: group,
-    });
+    const { id } = Taro.getCurrentInstance().router.params;
+    console.log(id);
+    Taro.request({
+      url: "http://localhost:1337/group/" + id,
+      method: "GET",
+      header: {
+        "content-type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      const group = {
+        id: res.data.id,
+        name: res.data.name,
+        tags: JSON.parse(res.data.tags),
+        images: JSON.parse(res.data.images),
+        location: JSON.parse(res.data.location),
+        contact: res.data.contact,
+        owner: res.data.owner,
+      };
 
-    Taro.setNavigationBarTitle({
-      title: group.name,
+      this.setState({
+        group: group,
+      });
+
+      Taro.setNavigationBarTitle({
+        title: group.name,
+      });
+      if (res.statusCode === 200) {
+        console.log("加入成功！");
+      } else {
+        console.log("加入失败！");
+      }
     });
   }
 

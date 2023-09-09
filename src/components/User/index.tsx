@@ -17,10 +17,10 @@ export default class User extends Component {
         <View className="at-col-6">
           <View className="name">{user.nickName}</View>
           <View className="tag-container">
-            <AtTag type="primary" className="gender" circle>
+            <AtTag type="primary" className="gender" circle size="small">
               {user.gender === 0 ? "男" : "女"}
             </AtTag>
-            <AtTag type="primary" className="city" circle>
+            <AtTag type="primary" className="city" circle size="small">
               {user.city === "" ? "未知" : user.city}
             </AtTag>
           </View>
