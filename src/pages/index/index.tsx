@@ -88,6 +88,7 @@ export default class Index extends Component {
     switch (value) {
       case 1:
         this.createGroup();
+        break;
       case 2:
         this.goToProfile();
     }
@@ -97,12 +98,22 @@ export default class Index extends Component {
     Taro.navigateTo({ url: "/pages/profile/index" });
   };
 
-  createGroup = () => {
-    if (this.state.token) {
-      Taro.navigateTo({ url: "/pages/newGroup/index" });
-    } else {
-      Taro.navigateTo({ url: "/pages/profile/index" });
-    }
+  createGroup = async () => {
+    Taro.request({
+      url: "http://localhost:1337/account/profile",
+      method: "GET",
+      header: {
+        "content-type": "application/json",
+        token: await Taro.getStorageSync("token"),
+      },
+    }).then((res) => {
+      console.log(res);
+      if (res.statusCode === 200) {
+        Taro.navigateTo({ url: "/pages/newGroup/index" });
+      } else {
+        Taro.navigateTo({ url: "/pages/profile/index" });
+      }
+    });
   };
 
   handleMarkerTap = (e) => {

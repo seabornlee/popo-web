@@ -1,7 +1,14 @@
 import Taro from "@tarojs/taro";
 import { Component } from "react";
 import { View, Text, Map } from "@tarojs/components";
-import { AtForm, AtInput, AtButton, AtImagePicker, AtTag, AtMessage } from "taro-ui";
+import {
+  AtForm,
+  AtInput,
+  AtButton,
+  AtImagePicker,
+  AtTag,
+  AtMessage,
+} from "taro-ui";
 import "taro-ui/dist/style/components/form.scss";
 import "taro-ui/dist/style/components/input.scss";
 import "taro-ui/dist/style/components/button.scss";
@@ -42,24 +49,24 @@ export default class CreateGroup extends Component {
   handleChangeImage = async (files, action) => {
     const images = this.state.images;
     const thiz = this;
-    if(action === 'add'){
+    if (action === "add") {
       Taro.uploadFile({
-        url: 'http://localhost:1337/image-uploader', // 这是你的Sails.js服务器地址
+        url: "http://localhost:1337/image-uploader", // 这是你的Sails.js服务器地址
         filePath: files[0].url,
-        name: 'file',
+        name: "file",
         header: {
-          token: await Taro.getStorageSync('token')
+          token: await Taro.getStorageSync("token"),
         },
         success: function (res) {
-          console.log(res)
+          console.log(res);
           thiz.setState({
             localImages: files,
-            images: [...images, JSON.parse(res.data).url]
+            images: [...images, JSON.parse(res.data).url],
           });
-        }
+        },
       });
     }
-  }
+  };
   handleChangeTag = (value, event) => {
     this.setState({
       currentTagInput: value,
@@ -76,6 +83,7 @@ export default class CreateGroup extends Component {
   };
 
   componentDidMount() {
+    console.log(`create group page`);
     Taro.getLocation({
       type: "wgs84",
       success: (res) => {
@@ -120,10 +128,11 @@ export default class CreateGroup extends Component {
         },
         header: {
           "content-type": "application/json",
-          "token": await Taro.getStorageSync("token"),
+          token: await Taro.getStorageSync("token"),
         },
       });
 
+      console.log(response);
       if (response.statusCode !== 200) {
         throw new Error(`HTTP Error: ${response.statusCode}`);
       }
@@ -138,7 +147,7 @@ export default class CreateGroup extends Component {
         });
 
         Taro.navigateTo({
-          url: '/pages/index/index'
+          url: "/pages/index/index",
         });
       }
     } catch (e) {
@@ -148,15 +157,15 @@ export default class CreateGroup extends Component {
 
   render() {
     return (
-      <View className='page'>
+      <View className="page">
         <AtMessage />
         <AtForm onSubmit={this.handleSubmit}>
-          <View className='row'>
+          <View className="row">
             <Text>名称</Text>
             <AtInput
-              name='groupName'
-              type='text'
-              placeholder='Enter group name'
+              name="groupName"
+              type="text"
+              placeholder="Enter group name"
               value={this.state.name}
               onChange={this.handleChangeName}
             />
@@ -165,22 +174,22 @@ export default class CreateGroup extends Component {
             <Text>成员标签</Text>
             <AtInput
               key={this.state.inputValueKey}
-              name='tags'
-              type='text'
+              name="tags"
+              type="text"
               focus
-              placeholder='Enter tag'
+              placeholder="Enter tag"
               value={this.state.currentTagInput}
               onConfirm={this.handleConfirm}
               onChange={this.handleChangeTag}
             />
-            <View className='tags'>
+            <View className="tags">
               {this.state.tags.map((tag, index) => (
-                <View className='tag-container'>
-                  <AtTag key={index} type='primary' circle>
+                <View className="tag-container">
+                  <AtTag key={index} type="primary" circle>
                     {tag}
                   </AtTag>
                   <Text
-                    className='at-icon at-icon-close-circle'
+                    className="at-icon at-icon-close-circle"
                     onClick={() => this.handleDeleteTag(index)}
                     style={{
                       position: "relative",
@@ -210,9 +219,9 @@ export default class CreateGroup extends Component {
           </View>
         </AtForm>
         <AtButton
-          type='primary'
-          className='submit-button'
-          formType='submit'
+          type="primary"
+          className="submit-button"
+          formType="submit"
           onClick={this.handleSubmit}
         >
           创建
