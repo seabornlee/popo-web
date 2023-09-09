@@ -39,6 +39,24 @@ export default class Group extends Component {
     });
   };
 
+  join = async () => {
+    Taro.request({
+      url: "http://localhost:1337/group/" + this.state.group.id + "/join",
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        token: await Taro.getStorageSync("token"),
+      },
+    }).then((res) => {
+      console.log(res);
+      if (res.statusCode === 200) {
+        console.log("加入成功！");
+      } else {
+        console.log("加入失败！");
+      }
+    });
+  };
+
   render() {
     return (
       <View>

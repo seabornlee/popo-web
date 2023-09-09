@@ -193,27 +193,6 @@ export default class Index extends Component {
     return (degrees * Math.PI) / 180;
   };
 
-  join = () => {
-    Taro.request({
-      url: "http://localhost:1337/group/join",
-      method: "POST",
-      header: {
-        "content-type": "application/json",
-        token: this.state.token,
-      },
-      data: {
-        groupId: this.state.selectedGroup.id,
-      },
-    }).then((res) => {
-      console.log(res);
-      if (res.data.success) {
-        Taro.atMessage({ message: "加入成功！", type: "success" });
-      } else {
-        Taro.atMessage({ message: "加入失败！", type: "error" });
-      }
-    });
-  };
-
   viewGroup = () => {
     Taro.setStorage({
       key: "group",
