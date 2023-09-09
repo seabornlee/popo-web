@@ -1,0 +1,20 @@
+.member {
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px 0;
+
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatar {
+      height: 100%;
+      width: 90%;
+    }
+  }
+
+  .name {
+    font-weight: bold;
+  }
+}

@@ -1,8 +1,11 @@
-import { View, Text, Swiper, SwiperItem, Image } from "@tarojs/components";
-import { AtButton, AtTag, AtMessage, AtAvatar } from "taro-ui";
-import Taro from "@tarojs/taro";
-import { Component } from "react";
 import "./index.scss";
+
+import { AtButton, AtTag, AtAvatar } from "taro-ui";
+import { View, Text, Swiper, SwiperItem, Image } from "@tarojs/components";
+import React, { Component } from "react";
+import Taro from "@tarojs/taro";
+
+import User from "../../components/User";
 
 export default class Group extends Component {
   state = {
@@ -87,50 +90,11 @@ export default class Group extends Component {
         </View>
         <View className="members">
           <Text className="title">主理人</Text>
-          <View className="member at-row">
-            <View className="at-col-3 avatar-container">
-              <AtAvatar
-                className="avatar"
-                circle
-                image={this.state.group.owner.avatarUrl}
-              ></AtAvatar>
-            </View>
-            <View className="at-col-6">
-              <View className="name">{this.state.group.owner.nickName}</View>
-              <View className="tag-container">
-                <AtTag type="primary" className="gender" circle>
-                  {this.state.group.owner.gender === 0 ? "男" : "女"}
-                </AtTag>
-                <AtTag type="primary" className="city" circle>
-                  {this.state.group.owner.city === ""
-                    ? "未知"
-                    : this.state.group.owner.city}
-                </AtTag>
-              </View>
-              <View className="intro">向往的生活</View>
-            </View>
-          </View>
+          <User data={this.state.group.owner} />
         </View>
         <View className="members">
           <Text className="title">成员(39)</Text>
-          <View className="member at-row">
-            <View className="at-col-3 avatar-container">
-              <AtAvatar
-                className="avatar"
-                circle
-                image="https://preview.qiantucdn.com/ing/97/41/80/56358PICbZmtMntkkiPr7_PIC2018.png!w1024_new_small_1"
-              ></AtAvatar>
-            </View>
-            <View className="at-col-9">
-              <View className="name">李浪溪</View>
-              <View>
-                <AtTag key={0} type="primary" circle>
-                  产品
-                </AtTag>
-              </View>
-              <View className="intro">向往的生活</View>
-            </View>
-          </View>
+          <User data={this.state.group.owner} />
         </View>
         <View className="members">
           <Text className="title">活动(9)</Text>
