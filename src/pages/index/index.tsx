@@ -39,6 +39,7 @@ export default class Index extends Component {
       tags: JSON.parse(group.tags),
       images: JSON.parse(group.images),
       location: JSON.parse(group.location),
+      contact: group.contact,
     }));
 
     console.log(response.data);
@@ -121,6 +122,7 @@ export default class Index extends Component {
 
     const groupId = e.markerId;
     const group = this.state.groups.find((g) => g.id === groupId);
+    console.log(group);
     this.setState({
       selectedGroup: group,
     });
@@ -220,8 +222,14 @@ export default class Index extends Component {
         {this.state.selectedGroup && (
           <View className="group-container" onClick={this.viewGroup}>
             <View className="at-row">
-              <View className="at-col-5">
-                <Image src={this.state.selectedGroup.images[0]} />
+              <View className="at-col-5 image-container">
+                <Image
+                  src={
+                    this.state.selectedGroup.images.length === 0
+                      ? "https://cdn.pixabay.com/photo/2022/09/25/09/58/houses-7477950_1280.jpg"
+                      : this.state.selectedGroup.images[0]
+                  }
+                />
               </View>
               <View className="at-col-7">
                 <View className="group-name">
@@ -239,10 +247,16 @@ export default class Index extends Component {
                 <View className="count">38</View> 位成员，
                 <View className="count">12</View> 场活动
                 <View className="address">
-                  📍 &nbsp;{this.state.selectedGroup.location.name}
+                  📍 &nbsp;
+                  {this.state.selectedGroup.location.name}
                 </View>
                 <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
-                <View className="coin">🪙 &nbsp;12000 Popo</View>
+                <View className="coin">
+                  ☎️ &nbsp;
+                  {this.state.selectedGroup.contact != ""
+                    ? this.state.selectedGroup.contact
+                    : "暂无联系方式"}
+                </View>
               </View>
             </View>
           </View>

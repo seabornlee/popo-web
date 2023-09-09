@@ -26,11 +26,19 @@ map {
   height: auto;
   background-color: #fff;
   font-size: 32px;
+  padding: 10px;
 
-  image {
-    width: 290px;
-    height: 320px;
-    border-radius: 10px;
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    image {
+      display: block;
+      width: 240px;
+      height: 320px;
+      border-radius: 10px;
+    }
   }
 
   .coin {
