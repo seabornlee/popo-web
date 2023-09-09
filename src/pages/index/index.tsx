@@ -50,24 +50,30 @@ export default class Index extends Component {
       groups: groups,
     });
 
-    const markers = groups.map((group) => ({
-      id: group.id,
-      latitude: group.location.latitude,
-      longitude: group.location.longitude,
-      width: 30,
-      height: 40,
-      callout: {
-        content: group.name,
-        color: "#000000",
-        fontSize: 14,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: "#000000",
-        padding: 5,
-        display: "ALWAYS",
-        textAlign: "center",
-      },
-    }));
+    const markers = groups.map((group) => {
+      const bgColor = group.tags.find((tag) => tag === "社区空间")
+        ? "#26c1dd"
+        : "#98dc21";
+      return {
+        id: group.id,
+        latitude: group.location.latitude,
+        longitude: group.location.longitude,
+        width: 30,
+        height: 40,
+        callout: {
+          content: group.name,
+          color: "#ffffff",
+          fontSize: 14,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: "#000000",
+          bgColor: bgColor,
+          padding: 5,
+          display: "ALWAYS",
+          textAlign: "center",
+        },
+      };
+    });
     console.log(markers);
     Taro.getLocation({
       type: "wgs84",
