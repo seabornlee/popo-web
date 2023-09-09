@@ -31,6 +31,14 @@ export default class Group extends Component {
     });
   }
 
+  openLocation = () => {
+    Taro.openLocation({
+      latitude: this.state.group.location.latitude,
+      longitude: this.state.group.location.longitude,
+      scale: 18,
+    });
+  };
+
   render() {
     return (
       <View>
@@ -51,7 +59,7 @@ export default class Group extends Component {
           </Swiper>
         </View>
         <View className="info">
-          <View>📍&nbsp;{this.state.group.location.address}</View>
+          <View>📍&nbsp;{this.state.group.location.name}</View>
           <View className="coin">
             ☎️ &nbsp;
             {this.state.group.contact != ""
@@ -130,6 +138,9 @@ export default class Group extends Component {
           </View>
         </View>
         <View className="actions">
+          <AtButton type="secondary" size="small" onClick={this.openLocation}>
+            前往
+          </AtButton>
           <AtButton type="primary" size="small" onClick={this.join}>
             加入
           </AtButton>
