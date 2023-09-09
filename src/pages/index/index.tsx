@@ -1,20 +1,21 @@
-import Taro from "@tarojs/taro";
-import { Component } from "react";
-import { View, Map, Image } from "@tarojs/components";
-import { AtTabBar, AtTag } from "taro-ui";
-import "taro-ui/dist/style/components/tab-bar.scss";
 import "taro-ui/dist/style/components/icon.scss";
+import "taro-ui/dist/style/components/tab-bar.scss";
+
 import "./index.scss";
+
+import { AtTabBar } from "taro-ui";
+import { View, Map } from "@tarojs/components";
+import React, { Component } from "react";
+import Taro from "@tarojs/taro";
+
+import Group from "../../components/Group";
 
 export default class Index extends Component {
   state = {
     latitude: null,
     longitude: null,
-    speed: null,
-    accuracy: null,
     currentTab: 0,
     markers: [],
-    token: null,
     groups: [],
     selectedGroup: null,
     lastTapTime: 0,
@@ -89,10 +90,6 @@ export default class Index extends Component {
     });
   }
 
-  randomNumber = () => {
-    return Math.floor(Math.random() * 30);
-  };
-
   handleTabClick = (value) => {
     this.setState({
       currentTab: value,
@@ -162,49 +159,6 @@ export default class Index extends Component {
     }
   };
 
-  getDistance = () => {
-    let lat1 = this.state.latitude;
-    let lon1 = this.state.longitude;
-
-    let lat2 = this.state.selectedGroup.location.latitude;
-    let lon2 = this.state.selectedGroup.location.longitude;
-
-    var earthRadiusKm = 6371;
-
-    var dLat = this.degreesToRadians(lat2 - lat1);
-    var dLon = this.degreesToRadians(lon2 - lon1);
-
-    lat1 = this.degreesToRadians(lat1);
-    lat2 = this.degreesToRadians(lat2);
-
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var distance = earthRadiusKm * c * 1000;
-    if (distance > 1000) {
-      return (distance / 1000).toFixed(2) + "公里";
-    } else {
-      return Math.ceil(distance) + "米";
-    }
-  };
-
-  degreesToRadians = (degrees) => {
-    return (degrees * Math.PI) / 180;
-  };
-
-  viewGroup = () => {
-    Taro.setStorage({
-      key: "group",
-      data: this.state.selectedGroup,
-    }).then((res) => {
-      console.log(res);
-      Taro.navigateTo({
-        url: "/pages/group/index",
-      });
-    });
-  };
-
   render() {
     return (
       <View className="index">
@@ -218,57 +172,12 @@ export default class Index extends Component {
           showLocation
         ></Map>
         {this.state.selectedGroup && (
-          <View className="group-container" onClick={this.viewGroup}>
-            <View className="at-row">
-              <View className="at-col-5 image-container">
-                <Image
-                  src={
-                    this.state.selectedGroup.images.length === 0
-                      ? "https://cdn.pixabay.com/photo/2022/09/25/09/58/houses-7477950_1280.jpg"
-                      : this.state.selectedGroup.images[0]
-                  }
-                />
-              </View>
-              <View className="at-col-7">
-                <View className="group-name">
-                  {this.state.selectedGroup.name}
-                </View>
-                <View className="tag-container">
-                  {this.state.selectedGroup.tags.map((tag, index) => (
-                    <AtTag key={index} type="primary" circle size="small">
-                      {tag}
-                    </AtTag>
-                  ))}
-                  <AtTag
-                    type="primary"
-                    className="member-count"
-                    circle
-                    size="small"
-                  >
-                    {this.randomNumber()} 成员
-                  </AtTag>
-                  <AtTag
-                    type="primary"
-                    className="events-count"
-                    circle
-                    size="small"
-                  >
-                    {this.randomNumber()} 活动
-                  </AtTag>
-                </View>
-                <View className="address">
-                  📍 &nbsp;
-                  {this.state.selectedGroup.location.name}
-                </View>
-                <View>🧭 &nbsp;距您直线距离{this.getDistance()}</View>
-                <View className="coin">
-                  ☎️ &nbsp;
-                  {this.state.selectedGroup.contact != ""
-                    ? this.state.selectedGroup.contact
-                    : "暂无联系方式"}
-                </View>
-              </View>
-            </View>
+          <View className="group-container">
+            <Group
+              latitude={this.state.latitude}
+              longitude={this.state.longitude}
+              data={this.state.selectedGroup}
+            />
           </View>
         )}
         <AtTabBar

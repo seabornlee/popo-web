@@ -8,9 +8,6 @@
 .index {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 map {
@@ -19,57 +16,10 @@ map {
 }
 
 .group-container {
-  border-radius: 20px;
-  width: 95%;
   position: absolute;
   bottom: 190px;
-  height: auto;
-  background-color: #fff;
-  font-size: 32px;
-  padding: 10px;
-
-  .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    image {
-      display: block;
-      width: 240px;
-      height: 320px;
-      border-radius: 10px;
-    }
-  }
-
-  .coin {
-    color: #e06f19;
-  }
-
-  .address {
-    white-space: normal;
-    word-wrap: break-word;
-    display: -webkit-box;
-  }
-
-  .group-name {
-    font-size: 38px;
-    font-weight: bold;
-  }
-
-  .count {
-    display: inline;
-    color: #26c1dd;
-    font-size: 44px;
-    font-weight: bold;
-  }
-}
-
-.member-count {
-  background-color: #26c1dd;
-  color: white;
-}
-
-.events-count {
-  background-color: #98dc21;
-  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -44,10 +44,22 @@ export default class Group extends Component {
     return (degrees * Math.PI) / 180;
   };
 
+  viewGroup = (group) => {
+    Taro.setStorage({
+      key: "group",
+      data: group,
+    }).then((res) => {
+      console.log(res);
+      Taro.navigateTo({
+        url: "/pages/group/index",
+      });
+    });
+  };
+
   render() {
     const group = this.props.data;
     return (
-      <View className="group" onClick={this.viewGroup}>
+      <View className="group" onClick={this.viewGroup.bind(this, group)}>
         <View className="at-row">
           <View className="at-col-5 image-container">
             <Image
