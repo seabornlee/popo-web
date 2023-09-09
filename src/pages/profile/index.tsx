@@ -5,13 +5,14 @@ import { View, Text } from "@tarojs/components";
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 
+const guest = {
+  nickName: "游客",
+  avatarUrl:
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+};
 export default class Profile extends Component {
   state = {
-    userInfo: {
-      nickName: "游客",
-      avatarUrl:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-    },
+    userInfo: guest,
   };
 
   async componentDidMount() {
@@ -111,6 +112,15 @@ export default class Profile extends Component {
     });
   };
 
+  logout = async () => {
+    await Taro.removeStorageSync("token");
+    this.setState({
+      loggedIn: false,
+      userInfo: guest,
+      hasUserInfo: false,
+    });
+  };
+
   render() {
     return (
       <View className="profile">
@@ -148,6 +158,7 @@ export default class Profile extends Component {
             arrow="right"
             iconInfo={{ size: 25, color: "#78A4FA", value: "bookmark" }}
             onClick={this.goToMyGroups}
+            disabled={!this.state.loggedIn}
           />
           <AtListItem
             title="我的活动"
@@ -157,7 +168,7 @@ export default class Profile extends Component {
           />
         </AtList>
         {this.state.loggedIn && (
-          <AtButton className="logout" onClick={this.logout} disabled>
+          <AtButton className="logout" onClick={this.logout}>
             退出
           </AtButton>
         )}
