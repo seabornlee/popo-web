@@ -105,6 +105,12 @@ export default class Profile extends Component {
     });
   };
 
+  goToMyGroups = () => {
+    Taro.navigateTo({
+      url: "/pages/my-groups/index",
+    });
+  };
+
   render() {
     return (
       <View className="profile">
@@ -140,8 +146,8 @@ export default class Profile extends Component {
           <AtListItem
             title="我的社群"
             arrow="right"
-            disabled
             iconInfo={{ size: 25, color: "#78A4FA", value: "bookmark" }}
+            onClick={this.goToMyGroups}
           />
           <AtListItem
             title="我的活动"

@@ -4,6 +4,7 @@ export default defineAppConfig({
     "pages/newGroup/index",
     "pages/group/index",
     "pages/profile/index",
+    "pages/my-groups/index",
   ],
   window: {
     backgroundTextStyle: "light",
