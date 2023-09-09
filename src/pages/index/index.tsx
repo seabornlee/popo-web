@@ -89,6 +89,10 @@ export default class Index extends Component {
     });
   }
 
+  randomNumber = () => {
+    return Math.floor(Math.random() * 30);
+  };
+
   handleTabClick = (value) => {
     this.setState({
       currentTab: value,
@@ -250,17 +254,29 @@ export default class Index extends Component {
                 <View className="group-name">
                   {this.state.selectedGroup.name}
                 </View>
-                <View className="tags">
+                <View className="tag-container">
                   {this.state.selectedGroup.tags.map((tag, index) => (
-                    <View className="tag-container">
-                      <AtTag key={index} type="primary" circle>
-                        {tag}
-                      </AtTag>
-                    </View>
+                    <AtTag key={index} type="primary" circle size="small">
+                      {tag}
+                    </AtTag>
                   ))}
+                  <AtTag
+                    type="primary"
+                    className="member-count"
+                    circle
+                    size="small"
+                  >
+                    {this.randomNumber()} 成员
+                  </AtTag>
+                  <AtTag
+                    type="primary"
+                    className="events-count"
+                    circle
+                    size="small"
+                  >
+                    {this.randomNumber()} 活动
+                  </AtTag>
                 </View>
-                <View className="count">38</View> 位成员，
-                <View className="count">12</View> 场活动
                 <View className="address">
                   📍 &nbsp;
                   {this.state.selectedGroup.location.name}
