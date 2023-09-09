@@ -9,10 +9,6 @@ import "./index.scss";
 export default class Group extends Component {
   componentDidMount() {}
 
-  randomNumber = () => {
-    return Math.floor(Math.random() * 30);
-  };
-
   getDistance = (group) => {
     let lat1 = this.props.latitude;
     let lon1 = this.props.longitude;
@@ -72,22 +68,6 @@ export default class Group extends Component {
                   {tag}
                 </AtTag>
               ))}
-              <AtTag
-                type="primary"
-                className="member-count"
-                circle
-                size="small"
-              >
-                {this.randomNumber()} 成员
-              </AtTag>
-              <AtTag
-                type="primary"
-                className="events-count"
-                circle
-                size="small"
-              >
-                {this.randomNumber()} 活动
-              </AtTag>
             </View>
             <View className="address">
               📍 &nbsp;
