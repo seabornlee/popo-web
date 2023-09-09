@@ -3,7 +3,7 @@ export default defineAppConfig({
     "pages/index/index",
     "pages/newGroup/index",
     "pages/group/index",
-    "pages/login/index",
+    "pages/profile/index",
   ],
   window: {
     backgroundTextStyle: "light",

@@ -85,12 +85,23 @@ export default class Index extends Component {
       currentTab: value,
     });
 
-    if (value === 1) {
-      if (this.state.token) {
-        Taro.navigateTo({ url: "/pages/newGroup/index" });
-      } else {
-        Taro.navigateTo({ url: "/pages/login/index" });
-      }
+    switch (value) {
+      case 1:
+        this.createGroup();
+      case 2:
+        this.goToProfile();
+    }
+  };
+
+  goToProfile = () => {
+    Taro.navigateTo({ url: "/pages/profile/index" });
+  };
+
+  createGroup = () => {
+    if (this.state.token) {
+      Taro.navigateTo({ url: "/pages/newGroup/index" });
+    } else {
+      Taro.navigateTo({ url: "/pages/profile/index" });
     }
   };
 
@@ -232,7 +243,7 @@ export default class Index extends Component {
           tabList={[
             { title: "地图", iconType: "map-pin" },
             { title: "创建社区", iconType: "add" },
-            { title: "捐赠", iconType: "money" },
+            { title: "我的", iconType: "user" },
           ]}
         />
       </View>

@@ -1,0 +1,41 @@
+@import "~taro-ui/dist/style/components/avatar.scss";
+@import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* 或者给出一个具体的高度*/
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* 或者给出一个具体的高度*/
+  text-align: center;
+
+  .nickName {
+    font-size: 38px;
+    display: block;
+    margin: 30px 0;
+  }
+
+  .settings {
+    width: 100vw;
+  }
+
+  .wechat {
+    margin: 30px 0;
+    background-color: #148822;
+    color: #ffffff;
+  }
+
+  .logout {
+    margin: 30px 0;
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+}
