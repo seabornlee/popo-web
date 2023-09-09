@@ -17,6 +17,7 @@ export default class Index extends Component {
     token: null,
     groups: [],
     selectedGroup: null,
+    lastTapTime: 0,
   };
 
   async componentDidShow() {
@@ -125,6 +126,9 @@ export default class Index extends Component {
     const group = this.state.groups.find((g) => g.id === groupId);
     console.log(group);
     this.setState({
+      lastTapTime: e.timeStamp,
+    });
+    this.setState({
       selectedGroup: group,
     });
   };
@@ -141,9 +145,11 @@ export default class Index extends Component {
 
   handleMapClick = (e) => {
     console.log("map click", e);
-    this.setState({
-      selectedGroup: null,
-    });
+    if (e.timeStamp - this.state.lastTapTime > 300) {
+      this.setState({
+        selectedGroup: null,
+      });
+    }
   };
 
   getDistance = () => {
@@ -218,6 +224,8 @@ export default class Index extends Component {
           latitude={this.state.latitude}
           markers={this.state.markers}
           onmarkertap={this.handleMarkerTap}
+          onCalloutTap={this.handleMarkerTap}
+          onRegionChange={this.handleMapClick}
           showLocation
         ></Map>
         {this.state.selectedGroup && (
