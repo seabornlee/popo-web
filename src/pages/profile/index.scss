@@ -18,13 +18,24 @@ page {
   text-align: center;
 
   .nickName {
-    font-size: 38px;
+    font-size: 32px;
     display: block;
-    margin: 30px 0;
+    margin: 20px 0;
+  }
+
+  .city {
+    background-color: #fee8e3;
+    color: #ffffff;
+  }
+
+  .gender {
+    background-color: #98dc21;
+    color: #ffffff;
   }
 
   .settings {
     width: 100vw;
+    margin: 30px 0;
   }
 
   .wechat {

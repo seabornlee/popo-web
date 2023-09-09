@@ -1,6 +1,6 @@
 import "./index.scss";
 
-import { AtAvatar, AtButton, AtList, AtListItem } from "taro-ui";
+import { AtAvatar, AtButton, AtList, AtListItem, AtTag } from "taro-ui";
 import { View, Text } from "@tarojs/components";
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
@@ -51,12 +51,33 @@ export default class Profile extends Component {
   getUserProfile = () => {
     Taro.getUserProfile({
       desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
+      success: async (res) => {
         // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
         console.log(res);
-        this.setState({
-          userInfo: res.userInfo,
-          hasUserInfo: true,
+        const userInfo = res.userInfo;
+        Taro.request({
+          url: "http://localhost:1337/account/update-profile",
+          method: "PUT",
+          header: {
+            "content-type": "application/json",
+            token: await Taro.getStorageSync("token"),
+          },
+          data: {
+            nickName: userInfo.nickName,
+            avatarUrl: userInfo.avatarUrl,
+            city: userInfo.city,
+            gender: userInfo.gender,
+          },
+        }).then((res) => {
+          console.log(res);
+          if (res.statusCode === 200) {
+            this.setState({
+              userInfo,
+              hasUserInfo: true,
+            });
+          } else {
+            console.log(res);
+          }
         });
       },
     });
@@ -68,6 +89,18 @@ export default class Profile extends Component {
         <View>
           <AtAvatar image={this.state.userInfo.avatarUrl} circle></AtAvatar>
           <Text className="nickName">{this.state.userInfo.nickName}</Text>
+          {this.state.hasUserInfo && (
+            <View className="tag-container">
+              <AtTag className="gender">
+                {this.state.userInfo.gender === 0 ? "男" : "女"}
+              </AtTag>
+              <AtTag className="city">
+                {this.state.userInfo.city === ""
+                  ? "未知"
+                  : this.sate.userInfo.city}
+              </AtTag>
+            </View>
+          )}
         </View>
         <View>
           {!this.state.loggedIn && (
@@ -77,7 +110,7 @@ export default class Profile extends Component {
           )}
           {this.state.loggedIn && !this.state.hasUserInfo && (
             <AtButton className="wechat" onClick={this.getUserProfile}>
-              获取头像和昵称
+              快速完善资料
             </AtButton>
           )}
         </View>
