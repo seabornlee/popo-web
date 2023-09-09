@@ -19,6 +19,8 @@ export default class Group extends Component {
         nickName: "",
       },
       images: [],
+      members: [],
+      memberCount: 0,
     },
   };
 
@@ -41,6 +43,8 @@ export default class Group extends Component {
         location: JSON.parse(res.data.location),
         contact: res.data.contact,
         owner: res.data.owner,
+        memberCount: res.data.memberCount,
+        members: res.data.members,
       };
 
       this.setState({
@@ -50,11 +54,6 @@ export default class Group extends Component {
       Taro.setNavigationBarTitle({
         title: group.name,
       });
-      if (res.statusCode === 200) {
-        console.log("加入成功！");
-      } else {
-        console.log("加入失败！");
-      }
     });
   }
 
@@ -117,8 +116,10 @@ export default class Group extends Component {
           <User data={this.state.group.owner} />
         </View>
         <View className="members">
-          <Text className="title">成员(39)</Text>
-          <User data={this.state.group.owner} />
+          <Text className="title">成员({this.state.group.memberCount})</Text>
+          {this.state.group.members.map((member) => (
+            <User data={member} />
+          ))}
         </View>
         <View className="members">
           <Text className="title">活动(9)</Text>
