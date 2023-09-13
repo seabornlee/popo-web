@@ -28,6 +28,93 @@ export default class Index extends Component {
   }
 
   async componentDidMount() {
+    const groups = await this.loadGroups();
+    this.setState({
+      groups: groups,
+    });
+
+    const groupsByLocation = this.groupByLocation(groups);
+    const markers = this.toMarkers(groupsByLocation);
+    console.log(markers);
+    Taro.getLocation({
+      type: "wgs84",
+      success: (res) => {
+        this.setState({
+          latitude: res.latitude,
+          longitude: res.longitude,
+          markers: markers,
+        });
+      },
+    });
+  }
+
+  groupByLocation = (groups) => {
+    const groupsByLocation = {};
+    groups.forEach((group) => {
+      const key = `${group.location.latitude},${group.location.longitude}`;
+      if (groupsByLocation[key]) {
+        groupsByLocation[key].push(group);
+      } else {
+        groupsByLocation[key] = [group];
+      }
+    });
+    return groupsByLocation;
+  };
+
+  toMarkers = (groupsByLocation) => {
+    const iconForSpace =
+      "https://cdn.icon-icons.com/icons2/1559/PNG/512/3440906-direction-location-map-marker-navigation-pin_107531.png";
+    const iconForGroup =
+      "https://cdn.icon-icons.com/icons2/2073/PNG/96/location_map_twitter_icon_127126.png";
+
+    let iconPath;
+    let calloutText;
+    const markers = [];
+    for (let key in groupsByLocation) {
+      console.log(key);
+      if (groupsByLocation[key].length > 1) {
+        calloutText = `${groupsByLocation[key].length}个社区在这里`;
+      } else {
+        calloutText = groupsByLocation[key][0].name;
+      }
+
+      if (
+        groupsByLocation[key].find((group) => group.tags.includes("社区空间"))
+      ) {
+        iconPath = iconForSpace;
+      } else {
+        iconPath = iconForGroup;
+      }
+
+      markers.push(this.toMarker(groupsByLocation[key], iconPath, calloutText));
+    }
+    return markers;
+  };
+
+  toMarker = (groups, iconPath, calloutText) => {
+    return {
+      id: groups[0].id,
+      latitude: groups[0].location.latitude,
+      longitude: groups[0].location.longitude,
+      width: 30,
+      height: 30,
+      iconPath: iconPath,
+      callout: {
+        content: calloutText,
+        color: "#ffffff",
+        fontSize: 14,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: "#000000",
+        bgColor: "#440906",
+        padding: 5,
+        display: "ALWAYS",
+        textAlign: "center",
+      },
+    };
+  };
+
+  loadGroups = async () => {
     const response = await Taro.request({
       url: "http://localhost:1337/group",
       method: "GET",
@@ -46,49 +133,8 @@ export default class Index extends Component {
     }));
 
     console.log(response.data);
-
-    this.setState({
-      groups: groups,
-    });
-
-    const markers = groups.map((group) => {
-      const bgColor = group.tags.find((tag) => tag === "社区空间")
-        ? "#26c1dd"
-        : "#98dc21";
-      return {
-        id: group.id,
-        latitude: group.location.latitude,
-        longitude: group.location.longitude,
-        width: 30,
-        height: 40,
-        callout: {
-          content: group.name,
-          color: "#ffffff",
-          fontSize: 14,
-          borderWidth: 1,
-          borderRadius: 10,
-          borderColor: "#000000",
-          bgColor: bgColor,
-          padding: 5,
-          display: "ALWAYS",
-          textAlign: "center",
-        },
-      };
-    });
-    console.log(markers);
-    Taro.getLocation({
-      type: "wgs84",
-      success: (res) => {
-        this.setState({
-          latitude: res.latitude,
-          longitude: res.longitude,
-          speed: res.speed,
-          accuracy: res.accuracy,
-          markers: markers,
-        });
-      },
-    });
-  }
+    return groups;
+  };
 
   handleTabClick = (value) => {
     this.setState({
