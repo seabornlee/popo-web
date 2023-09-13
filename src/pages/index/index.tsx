@@ -29,13 +29,13 @@ export default class Index extends Component {
 
   async componentDidMount() {
     const groups = await this.loadGroups();
+    const groupsByLocation = this.groupByLocation(groups);
+
     this.setState({
-      groups: groups,
+      groupsByLocation,
     });
 
-    const groupsByLocation = this.groupByLocation(groups);
     const markers = this.toMarkers(groupsByLocation);
-    console.log(markers);
     Taro.getLocation({
       type: "wgs84",
       success: (res) => {
@@ -69,9 +69,7 @@ export default class Index extends Component {
 
     let iconPath;
     let calloutText;
-    const markers = [];
-    for (let key in groupsByLocation) {
-      console.log(key);
+    return Object.keys(groupsByLocation).map((key, index) => {
       if (groupsByLocation[key].length > 1) {
         calloutText = `${groupsByLocation[key].length}个社区在这里`;
       } else {
@@ -86,14 +84,13 @@ export default class Index extends Component {
         iconPath = iconForGroup;
       }
 
-      markers.push(this.toMarker(groupsByLocation[key], iconPath, calloutText));
-    }
-    return markers;
+      return this.toMarker(index, groupsByLocation[key], iconPath, calloutText);
+    });
   };
 
-  toMarker = (groups, iconPath, calloutText) => {
+  toMarker = (id, groups, iconPath, calloutText) => {
     return {
-      id: groups[0].id,
+      id,
       latitude: groups[0].location.latitude,
       longitude: groups[0].location.longitude,
       width: 30,
@@ -173,10 +170,10 @@ export default class Index extends Component {
   };
 
   handleMarkerTap = (e) => {
-    console.log("marker tap", e);
-
-    const groupId = e.markerId;
-    const group = this.state.groups.find((g) => g.id === groupId);
+    const index = e.markerId;
+    console.log("marker tap", index);
+    const key = this.state.groupsByLocation.keys[index];
+    const group = this.state.groupsByLocation[key][0];
     console.log(group);
     this.setState({
       lastTapTime: e.timeStamp,
