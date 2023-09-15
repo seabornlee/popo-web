@@ -71,7 +71,7 @@ export default class Index extends Component {
     let calloutText;
     return Object.keys(groupsByLocation).map((key, index) => {
       if (groupsByLocation[key].length > 1) {
-        calloutText = `${groupsByLocation[key].length}个社区在这里`;
+        calloutText = `${groupsByLocation[key].length}个小组这里`;
       } else {
         calloutText = groupsByLocation[key][0].name;
       }
@@ -171,8 +171,7 @@ export default class Index extends Component {
 
   handleMarkerTap = (e) => {
     const index = e.markerId;
-    console.log("marker tap", index);
-    const key = this.state.groupsByLocation.keys[index];
+    const key = Object.keys(this.state.groupsByLocation)[index];
     const group = this.state.groupsByLocation[key][0];
     console.log(group);
     this.setState({
