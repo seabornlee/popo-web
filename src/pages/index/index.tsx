@@ -4,7 +4,7 @@ import "taro-ui/dist/style/components/tab-bar.scss";
 import "./index.scss";
 
 import { AtTabBar } from "taro-ui";
-import { View, Map } from "@tarojs/components";
+import { View, Map, Swiper, SwiperItem } from "@tarojs/components";
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 
@@ -17,7 +17,7 @@ export default class Index extends Component {
     currentTab: 0,
     markers: [],
     groups: [],
-    selectedGroup: null,
+    selectedGroups: [],
     lastTapTime: 0,
   };
 
@@ -188,13 +188,13 @@ export default class Index extends Component {
   handleMarkerTap = (e) => {
     const index = e.markerId;
     const key = Object.keys(this.state.groupsByLocation)[index];
-    const group = this.state.groupsByLocation[key][0];
-    console.log(group);
+    const groups = this.state.groupsByLocation[key];
+    console.log(groups);
     this.setState({
       lastTapTime: e.timeStamp,
     });
     this.setState({
-      selectedGroup: group,
+      selectedGroups: groups,
     });
   };
 
@@ -212,7 +212,7 @@ export default class Index extends Component {
     console.log("map click", e);
     if (e.timeStamp - this.state.lastTapTime > 300) {
       this.setState({
-        selectedGroup: null,
+        selectedGroups: [],
       });
     }
   };
@@ -229,15 +229,25 @@ export default class Index extends Component {
           onRegionChange={this.handleMapClick}
           showLocation
         ></Map>
-        {this.state.selectedGroup && (
-          <View className="group-container">
-            <Group
-              latitude={this.state.latitude}
-              longitude={this.state.longitude}
-              data={this.state.selectedGroup}
-            />
-          </View>
-        )}
+        <Swiper
+          className="groups"
+          indicatorColor="#999"
+          indicatorActiveColor="#333"
+          circular
+          indicatorDots
+        >
+          {this.state.selectedGroups.map((group) => (
+            <SwiperItem>
+              <View className="group-container">
+                <Group
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                  data={group}
+                />
+              </View>
+            </SwiperItem>
+          ))}
+        </Swiper>
         <AtTabBar
           fixed
           current={this.state.currentTab}
