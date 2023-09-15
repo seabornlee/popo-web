@@ -254,7 +254,7 @@ export default class Index extends Component {
           onClick={this.handleTabClick}
           tabList={[
             { title: "地图", iconType: "map-pin" },
-            { title: "创建社区", iconType: "add" },
+            { title: "创建小组", iconType: "add" },
             { title: "我的", iconType: "user" },
           ]}
         />
