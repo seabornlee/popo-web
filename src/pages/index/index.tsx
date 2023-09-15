@@ -84,11 +84,27 @@ export default class Index extends Component {
         iconPath = iconForGroup;
       }
 
-      return this.toMarker(index, groupsByLocation[key], iconPath, calloutText);
+      const bgColor = this.getBgColor(groupsByLocation[key].length);
+
+      return this.toMarker(
+        index,
+        groupsByLocation[key],
+        iconPath,
+        calloutText,
+        bgColor
+      );
     });
   };
 
-  toMarker = (id, groups, iconPath, calloutText) => {
+  // return color according to group count, base color is red, deeper when more groups
+  getBgColor = (groupCount) => {
+    const baseColor = 255;
+    const colorStep = 20;
+    const color = baseColor - groupCount * colorStep;
+    return `rgb(${color}, 0, 0)`;
+  };
+
+  toMarker = (id, groups, iconPath, calloutText, bgColor) => {
     return {
       id,
       latitude: groups[0].location.latitude,
@@ -103,7 +119,7 @@ export default class Index extends Component {
         borderWidth: 1,
         borderRadius: 10,
         borderColor: "#000000",
-        bgColor: "#440906",
+        bgColor,
         padding: 5,
         display: "ALWAYS",
         textAlign: "center",
