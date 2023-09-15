@@ -64,7 +64,13 @@ export default class Group extends Component {
             <View className="group-name">{group.name}</View>
             <View className="tag-container">
               {group.tags.map((tag, index) => (
-                <AtTag key={index} type="primary" circle size="small">
+                <AtTag
+                  key={index}
+                  type="primary"
+                  circle
+                  size="small"
+                  className={tag === "社区空间" ? "tag-space" : ""}
+                >
                   {tag}
                 </AtTag>
               ))}
