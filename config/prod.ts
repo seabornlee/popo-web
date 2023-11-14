@@ -2,7 +2,8 @@ import type { UserConfigExport } from "@tarojs/cli";
 
 export default {
   env: {
-    SERVER_URL: '"http://172.31.43.111"',
+    SERVER_URL:
+      '"http://ec2-54-179-116-213.ap-southeast-1.compute.amazonaws.com"',
   },
   mini: {},
   h5: {
