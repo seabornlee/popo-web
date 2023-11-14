@@ -1,0 +1,48 @@
+.group {
+  border-radius: 20px;
+  width: 95%;
+  height: auto;
+  background-color: #fff;
+  font-size: 32px;
+  padding: 10px;
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    image {
+      display: block;
+      width: 240px;
+      height: 320px;
+      border-radius: 10px;
+    }
+  }
+
+  .coin {
+    color: #e06f19;
+  }
+
+  .address {
+    white-space: normal;
+    word-wrap: break-word;
+    display: -webkit-box;
+  }
+
+  .group-name {
+    font-size: 38px;
+    font-weight: bold;
+  }
+
+  .count {
+    display: inline;
+    color: #26c1dd;
+    font-size: 44px;
+    font-weight: bold;
+  }
+}
+
+.tag-space {
+  background-color: #3fd0f4;
+  color: #ffffff;
+}

@@ -51,7 +51,7 @@ export default class CreateGroup extends Component {
     const thiz = this;
     if (action === "add") {
       Taro.uploadFile({
-        url: "http://localhost:1337/image-uploader", // 这是你的Sails.js服务器地址
+        url: process.env.SERVER_URL + "/image-uploader", // 这是你的Sails.js服务器地址
         filePath: files[0].url,
         name: "file",
         header: {
@@ -118,7 +118,7 @@ export default class CreateGroup extends Component {
 
     try {
       const response = await Taro.request({
-        url: "http://localhost:1337/group", // replace with your POST url
+        url: process.env.SERVER_URL + "/group", // replace with your POST url
         method: "POST",
         data: {
           name,

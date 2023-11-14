@@ -17,7 +17,7 @@ export default class Profile extends Component {
 
   async componentDidMount() {
     Taro.request({
-      url: "http://localhost:1337/account/profile",
+      url: process.env.SERVER_URL + "/account/profile",
       method: "GET",
       header: {
         "content-type": "application/json",
@@ -43,7 +43,7 @@ export default class Profile extends Component {
       success: function (res) {
         if (res.code) {
           Taro.request({
-            url: "http://localhost:1337/account/login-with-wechat",
+            url: process.env.SERVER_URL + "/account/login-with-wechat",
             data: {
               code: res.code,
             },
@@ -79,7 +79,7 @@ export default class Profile extends Component {
         console.log(res);
         const userInfo = res.userInfo;
         Taro.request({
-          url: "http://localhost:1337/account/update-profile",
+          url: process.env.SERVER_URL + "/account/update-profile",
           method: "PUT",
           header: {
             "content-type": "application/json",

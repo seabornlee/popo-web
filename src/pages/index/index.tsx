@@ -129,7 +129,7 @@ export default class Index extends Component {
 
   loadGroups = async () => {
     const response = await Taro.request({
-      url: "http://localhost:1337/group",
+      url: process.env.SERVER_URL + "/group",
       method: "GET",
       header: {
         "content-type": "application/json",
@@ -169,7 +169,7 @@ export default class Index extends Component {
 
   createGroup = async () => {
     Taro.request({
-      url: "http://localhost:1337/account/profile",
+      url: process.env.SERVER_URL + "/account/profile",
       method: "GET",
       header: {
         "content-type": "application/json",

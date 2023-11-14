@@ -33,7 +33,7 @@ export default class MyGroups extends Component {
 
   loadJoinedGroups = async () => {
     Taro.request({
-      url: "http://localhost:1337/group/joined",
+      url: process.env.SERVER_URL + "/group/joined",
       method: "GET",
       header: {
         "content-type": "application/json",
